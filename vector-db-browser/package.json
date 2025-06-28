@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "idb-keyval": "^6.2.2",
+    "onnxruntime-node": "^1.22.0-rev"
+  }
+}

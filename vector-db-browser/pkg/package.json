@@ -1,0 +1,15 @@
+{
+  "name": "vector-db-browser",
+  "type": "module",
+  "version": "0.1.0",
+  "files": [
+    "vector_db_browser_bg.wasm",
+    "vector_db_browser.js",
+    "vector_db_browser.d.ts"
+  ],
+  "main": "vector_db_browser.js",
+  "types": "vector_db_browser.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
