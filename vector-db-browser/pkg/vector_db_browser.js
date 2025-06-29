@@ -233,7 +233,6 @@ function initSync(module) {
 }
 
 async function __wbg_init(module_or_path) {
-    console.log('here')
     if (wasm !== undefined) return wasm;
 
 

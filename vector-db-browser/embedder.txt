@@ -1,0 +1,62 @@
+// embedder.js
+
+console.log('Before ORT import');
+
+import { pipeline } from 'https://cdn.skypack.dev/@xenova/transformers';
+console.log('Before ORT import');
+
+import * as ort from 'https://cdn.skypack.dev/onnxruntime-web';
+
+let xenovaEmbedder = null;
+let config = {
+  backend: 'xenova', // or 'onnx'
+  onnxModelUrl: null // Optional: path to your custom .onnx model
+};
+
+export function setEmbedderConfig(customConfig) {
+  config = { ...config, ...customConfig };
+}
+
+async function loadXenova() {
+  if (!xenovaEmbedder) {
+    xenovaEmbedder = await pipeline('feature-extraction', 'Xenova/e5-small', {
+      quantized: true
+    });
+  }
+  return xenovaEmbedder;
+}
+
+async function embedWithXenova(text) {
+  const model = await loadXenova();
+  const output = await model(text, {
+    pooling: 'mean',
+    normalize: true
+  });
+  return output.data;
+}
+
+let onnxSession = null;
+async function loadONNXModel(url) {
+  if (!onnxSession) {
+    onnxSession = await ort.InferenceSession.create(url || config.onnxModelUrl);
+  }
+  return onnxSession;
+}
+
+async function embedWithONNX(text) {
+  const session = await loadONNXModel();
+  const inputTensor = textToTensor(text); // You will implement this part for ONNX model's input format
+  const feeds = { input: inputTensor }; // depends on model's input name
+
+  const results = await session.run(feeds);
+  const output = results['output']; // Adjust based on model
+  return output.data;
+}
+
+// Entry point
+export async function embedText(text) {
+  if (config.backend === 'onnx') {
+    return await embedWithONNX(text);
+  }
+  return await embedWithXenova(text);
+}

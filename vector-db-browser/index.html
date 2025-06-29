@@ -1,36 +1,16 @@
+<!-- index.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
     <title>Vector DB in the Browser</title>
   </head>
   <body>
+        <script type="module" src="./main.js"></script>
+
     <h1>🔍 In-Browser Vector DB</h1>
     <p>Check the console for vector search output</p>
-
-    <script type="module">
-    import { VectorStoreWrapper } from './vector_store_wrapper.js';
-     import init from '../pkg/vector_db_browser.js';
-
-async function main() {
-  console.log('wasm before')
-  await init();
-  console.log('was after')
-
-  const store = new VectorStoreWrapper({
-    backend: 'xenova',
-    modelName: 'Xenova/e5-small',
-    namespace: 'vdb_prod_1'
-  });
-
-  await store.loadFromIndexedDB();
-  await store.addText("vec1", "test");
-  await store.addText("vec2", "exam");
-
-  const results = await store.searchText("quiz");
-  console.log(results);
-}
-console.log('main')
-main();
-    </script>
+   
+    <!-- Vite will automatically insert the JS bundle here -->
   </body>
 </html>
