@@ -1,0 +1,10 @@
+{
+  "name": "lovlydb",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Build scripts for LovlyDB WASM (Rust core)",
+  "scripts": {
+    "build": "wasm-pack build --target web --out-dir pkg",
+    "build:dev": "wasm-pack build --target web --out-dir pkg --dev"
+  }
+}
