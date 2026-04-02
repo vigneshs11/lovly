@@ -1,0 +1,3 @@
+# Enable WASM SIMD128 for wasm32 builds (Day 1–2 roadmap).
+[target.wasm32-unknown-unknown]
+rustflags = ["-C", "target-feature=+simd128"]
